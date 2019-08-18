@@ -107,5 +107,3 @@ In case you have any ideas, features you would like to be included or any bug fi
 git clone https://github.com/ChukwuEmekaAjah/beautiful-dom.git
 ```
 
-## Work still to be done 
-- add support for asychronous handler calling with an options object
