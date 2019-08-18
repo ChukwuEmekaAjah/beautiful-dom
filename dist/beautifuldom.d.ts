@@ -14,6 +14,6 @@ declare class BeautifulDom {
     getElementById(id: string): HTMLElementData | null;
     getElementsByName(name: string): HTMLElementData[];
     querySelectorAll(query: string): HTMLElementData[];
-    querySelector(query: string): HTMLElementData;
+    querySelector(query: string): (HTMLElementData | null);
 }
 export default BeautifulDom;

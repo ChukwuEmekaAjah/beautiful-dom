@@ -13,7 +13,7 @@ declare class HTMLElementData {
     private getByAttribute;
     getElementsByClassName(classValue: string): HTMLElementData[];
     querySelectorAll(query: string): HTMLElementData[];
-    querySelector(query: string): HTMLElementData;
+    querySelector(query: string): (HTMLElementData | null);
     getAttribute(attribute: string): (string | null);
 }
 export default HTMLElementData;

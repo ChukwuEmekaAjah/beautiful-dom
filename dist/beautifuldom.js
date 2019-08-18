@@ -568,7 +568,7 @@ var BeautifulDom = /** @class */ (function () {
         return this.parsedData;
     };
     BeautifulDom.prototype.querySelector = function (query) {
-        return this.querySelectorAll(query).slice(0, 1)[0];
+        return this.querySelectorAll(query).slice(0, 1)[0] ? this.querySelectorAll(query).slice(0, 1)[0] : null;
     };
     return BeautifulDom;
 }());

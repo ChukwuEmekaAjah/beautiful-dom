@@ -486,7 +486,7 @@ var HTMLElementData = /** @class */ (function () {
     };
     HTMLElementData.prototype.getByAttribute = function (attribute, attributeValue) {
         var attributeRegExp = new RegExp(attribute + "=\\s*('|\")(\\s*" + attributeValue + "\\s+.*?)|(.*?\\s+" + attributeValue + "\\s+.*?)|(.*?\\s+" + attributeValue + "\\s*)(\"|')", 'mi');
-        if (!this.parsedData.length) {
+        if (this.parsedData.length == 0) {
             this.parseAllTags();
         }
         var matchingTags = [];
@@ -527,7 +527,7 @@ var HTMLElementData = /** @class */ (function () {
         return this.parsedData;
     };
     HTMLElementData.prototype.querySelector = function (query) {
-        return this.querySelectorAll(query).slice(0, 1)[0];
+        return this.querySelectorAll(query).slice(0, 1)[0] ? this.querySelectorAll(query).slice(0, 1)[0] : null;
     };
     HTMLElementData.prototype.getAttribute = function (attribute) {
         var attributeRegExp = new RegExp(attribute + "\\s*=\\s*('|\")(.*?)(\"|')", 'mi');

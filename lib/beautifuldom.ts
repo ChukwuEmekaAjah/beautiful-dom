@@ -574,8 +574,8 @@ class BeautifulDom {
        return this.parsedData;
     }
 
-    public querySelector(query : string) : HTMLElementData {
-        return this.querySelectorAll(query).slice(0,1)[0];
+    public querySelector(query : string) : (HTMLElementData | null) {
+        return this.querySelectorAll(query).slice(0,1)[0] ?this.querySelectorAll(query).slice(0,1)[0] : null;
     }
 }
 

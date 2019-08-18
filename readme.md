@@ -1,6 +1,6 @@
 <h1 align="center">Beautiful-dom</h1>
 
-Beautiful-dom is a lightweight library that mirrors the capabilities of the HTML DOM API needed for parsing crawled HTML/XML pages. It models the methods and properties of HTML nodes that are relevant for extracting data from HTML nodes
+Beautiful-dom is a lightweight library that mirrors the capabilities of the HTML DOM API needed for parsing crawled HTML/XML pages. It models the methods and properties of HTML nodes that are relevant for extracting data from HTML nodes. It is written in TypeScript and can be used as a CommonJS library
 
 
 ## What you get
@@ -8,6 +8,8 @@ Beautiful-dom is a lightweight library that mirrors the capabilities of the HTML
 - Fast queries that return essential data from HTML nodes
 - In-place order of HTML nodes after searching and parsing.
 - Complex queries with CSS selectors.
+
+
 ## How to use
 ```bash
 npm install --save beautiful-dom
@@ -64,19 +66,55 @@ Their usage is as they are expected to be used in an actual HTML DOM with the de
 let paragraphNodes = dom.getElementsByTagName('p');
 // returns a list of node objects with node name 'p'
 
-let nodesWithSpecificClass = dom.getElementsByClassName('work');
+let nodesWithSpecificClass = dom.reInit().getElementsByClassName('work');
 // returns a list of node objects with class name 'work'
 
-let nodeWithSpecificId = dom.getElementById('container');
+let nodeWithSpecificId = dom.reInit().getElementById('container');
 // returns a node with id 'container'
 
-let complexQueryNodes = dom.querySelectorAll('p.paragraph b');
+let complexQueryNodes = dom.reInit().querySelectorAll('p.paragraph b');
 // returns a list of nodes that satisfy the complex query of CSS selectors
 
-let nodesWithSpecificName = dom.getElementsByName('name');
+let nodesWithSpecificName = dom.reInit().getElementsByName('name');
 // returns a list of nodes with the specific 'name'
 
-let linkNode = dom.querySelector('a#myWebsite');
+let linkNode = dom.reInit().querySelector('a#myWebsite');
+// returns a node object with with the CSS selector
+
+let linkHref = linkNode.getAttribute('href');
+// returns the value of the attribute e.g 'https://www.ajah.xyz'
+
+let linkInnerHTML = linkNode.innerHTML
+// returns the innerHTML of a node object e.g ' My website '
+
+let linkTextContent = linkNode.textContent 
+// returns the textContent of a node object e.g ' My website '
+
+let linkInnerText = linkNode.innerText
+// returns the innerText of a node object e.g ' My website '
+
+let linkOuterHTML = linkNode.outerHTML
+// returns the outerHTML of a node object i.e. '<a class="myWebsite" href="https://www.ajah.xyz" > My website </a>'
+
+```
+
+
+## Examples for a node object
+
+```js
+
+let paragraphNodes = dom.getElementsByTagName('p');
+// returns a list of node objects with node name 'p'
+
+let nodesWithSpecificClass = paragraphNodes[0].getElementsByClassName('work');
+// returns a list of node objects inside the first paragraph node with class name 'work' 
+
+
+let complexQueryNodes = paragraphNodes[0].querySelectorAll('span.work');
+// returns a list of nodes in the paragraph node that satisfy the complex query of CSS selectors
+
+
+let linkNode = dom.reInit().querySelector('a#myWebsite');
 // returns a node object with with the CSS selector
 
 let linkHref = linkNode.getAttribute('href');
@@ -107,3 +145,5 @@ In case you have any ideas, features you would like to be included or any bug fi
 git clone https://github.com/ChukwuEmekaAjah/beautiful-dom.git
 ```
 
+## Call for advice
+I need help with a procedure on how to remove the 'reInit' method used for clearing the memory of DOM object after each method call so as to model actual HTML DOM behaviour. 

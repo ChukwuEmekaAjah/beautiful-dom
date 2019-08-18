@@ -490,7 +490,7 @@ class HTMLElementData{
 
     private getByAttribute( attribute : string, attributeValue ? : string): HTMLElementData[] {
         let attributeRegExp : RegExp= new RegExp(`${attribute}=\\s*('|")(\\s*${attributeValue}\\s+.*?)|(.*?\\s+${attributeValue}\\s+.*?)|(.*?\\s+${attributeValue}\\s*)("|')`, 'mi');
-        if(!this.parsedData.length){
+        if(this.parsedData.length == 0){
             this.parseAllTags();
         }  
         let matchingTags : HTMLElementData [] = <HTMLElementData []> [];
@@ -533,8 +533,8 @@ class HTMLElementData{
         return this.parsedData;
     }
 
-    public querySelector(query : string) : HTMLElementData {
-        return this.querySelectorAll(query).slice(0,1)[0];
+    public querySelector(query : string) : (HTMLElementData | null) {
+        return this.querySelectorAll(query).slice(0,1)[0] ? this.querySelectorAll(query).slice(0,1)[0] : null ;
     }
 
     public getAttribute(attribute : string) : (string | null) {
