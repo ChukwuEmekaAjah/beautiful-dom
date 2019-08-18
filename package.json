@@ -1,0 +1,13 @@
+{
+  "name": "beautiful-dom",
+  "version": "1.0.3",
+  "description": "",
+  "main": "dist/index.js",
+  "types":"dist/index.d.ts",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": ["dom","html","xml","parser","crawler"],
+  "author": "Ajah Chukwuemeka",
+  "license": "ISC"
+}
