@@ -1,13 +1,14 @@
 
 import {RegExpObject, Pattern, tag} from './types';
 
-
+ 
 
 class HTMLElementData{
     public outerHTML :string;
     public innerHTML : string;
     public innerText : string;
     public textContent : string;
+    private done : Boolean = true;
     public parsedData : HTMLElementData [] = <HTMLElementData []> [];
     private patterns : Pattern [] = [
         {
@@ -16,7 +17,7 @@ class HTMLElementData{
                 tokens.push(match[0]);
                 let holder : HTMLElementData [] = [];
                 if(this.parsedData.length){
-                    console.log(this.parsedData);
+                    
                     this.parsedData.forEach((htmlElement) =>{
                         holder =  holder.concat(htmlElement.parseAllTags());
                      });
@@ -29,15 +30,16 @@ class HTMLElementData{
                          }
                      })
                      this.parsedData = returnValue;
+                     this.done = false;
                      return this.parsedData;
                 }
+                this.done = false;
                 return this.parseAllTags();
             }
         },
         {
             regExp : /(\w+)(\.|#)(\w+)/,
             action : (match:RegExpMatchArray, tokens : string []) => {
-                console.log('how is it')
                 if(tokens[tokens.length - 1] == '+'){
                     let htmlElements : HTMLElementData [] = this.parsedData;
                     let allElements : HTMLElementData [] = this.parseAllTags();
@@ -80,10 +82,10 @@ class HTMLElementData{
                             }
                         }
                     }
+                    this.done = false;
                     this.parsedData = returnValue;
                 }
                 else if(tokens[tokens.length - 1] == '>'){
-                    console.log('check me out')
                     let matchingTags : HTMLElementData [] = [];
                     let scrapData : string [] = [];
                     for(let element = 0; element < this.parsedData.length; element++){
@@ -97,7 +99,7 @@ class HTMLElementData{
                                 }
                             }
                             if(i == this.parsedData.length){
-                                console.log(match[1]);
+                                 
                                 // that means it is not in any of the other matchingTags
                                 if(scrapData.length > 0){
                                     let u = 0;
@@ -108,7 +110,7 @@ class HTMLElementData{
                                         else if(u == scrapData.length -1 && scrapData[u].indexOf(matchingElement.outerHTML) == - 1 ){
                                             scrapData.push(matchingElement.outerHTML);
                                             matchingTags.push(matchingElement);
-                                            console.log(matchingTags.length,'this is the length of matching tags');
+                                             
                                         }
                                     }
                                 } else{
@@ -153,6 +155,7 @@ class HTMLElementData{
                     }
                 });
                 this.parsedData = returnValue;
+                this.done = false;
                 return this.parsedData;
             }
         },
@@ -202,10 +205,10 @@ class HTMLElementData{
                         }
                     }
                     this.parsedData = returnValue;
+                    this.done = false;
                     return this.parsedData;
                 }
                 else if(tokens[tokens.length - 1] == '>'){
-                    console.log('check me out')
                     let matchingTags : HTMLElementData [] = [];
                     let scrapData : string [] = [];
                     for(let element = 0; element < this.parsedData.length; element++){
@@ -220,7 +223,7 @@ class HTMLElementData{
                                 }
                             }
                             if(i == this.parsedData.length){
-                                console.log(match[1]);
+                                 
                                 // that means it is not in any of the other matchingTags
                                 if(scrapData.length > 0){
                                     let u = 0;
@@ -231,7 +234,7 @@ class HTMLElementData{
                                         else if(u == scrapData.length -1 && scrapData[u].indexOf(matchingElement.outerHTML) == - 1 ){
                                             scrapData.push(matchingElement.outerHTML);
                                             matchingTags.push(matchingElement);
-                                            console.log(matchingTags.length,'this is the length of matching tags');
+                                             
                                         }
                                     }
                                 } else{
@@ -242,6 +245,7 @@ class HTMLElementData{
                         }
                     }
                     this.parsedData = matchingTags;
+                    this.done = false;
                     return this.parsedData
                 }
                 tokens.push(match[0]);
@@ -259,9 +263,12 @@ class HTMLElementData{
                         }
                     })
                     this.parsedData = returnValue;
+                    this.done = false;
                     return this.parsedData;
                 }else{
-                    return this.getElementsByTagName(match[0]);
+                    let returnValue =  this.getElementsByTagName(match[0]);
+                    this.done = false;
+                    return returnValue;
                 }
             }
         },
@@ -270,7 +277,6 @@ class HTMLElementData{
             action : (match:RegExpMatchArray, tokens : string [], elements : HTMLElementData []) => {
                 if(tokens[tokens.length - 1] == '+'){
                     tokens.push(match[0])
-                    console.log('this is not a difficult problem charlie! oooo i hear you');
                     let htmlElements : HTMLElementData [] = this.parsedData;
                     let allElements : HTMLElementData [] = this.parseAllTags();
                     this.parsedData = htmlElements;
@@ -313,6 +319,7 @@ class HTMLElementData{
                         }
                     }
                     this.parsedData = returnValue;
+                    this.done = false;
                     return this.parsedData;
                 }
                 else if(tokens[tokens.length - 1] == '>'){
@@ -339,7 +346,7 @@ class HTMLElementData{
                                         else if(u == scrapData.length -1 && scrapData[u].indexOf(matchingElement.outerHTML) == - 1 ){
                                             scrapData.push(matchingElement.outerHTML);
                                             matchingTags.push(matchingElement);
-                                            console.log(matchingTags.length,'this is the length of matching tags');
+                                             
                                         }
                                     }
                                 } else{
@@ -350,6 +357,8 @@ class HTMLElementData{
                         }
                     }
                     this.parsedData = matchingTags;
+                    this.done = false;
+                    return this.parsedData;
                 }
                 let holder : HTMLElementData [] = [];
                 if(this.parsedData.length > 0){
@@ -365,9 +374,12 @@ class HTMLElementData{
                         }
                     })
                     this.parsedData = returnValue;
+                    this.done = false;
                     return this.parsedData;
                 }else{
-                    return this.getElementsByClassName(match[0].slice(1));
+                    let returnValue = this.getElementsByClassName(match[0].slice(1));
+                    this.done = false;
+                    return returnValue;
                 }
             }
         },
@@ -381,13 +393,8 @@ class HTMLElementData{
         {
             regExp : /\[(\w+)(([\^\|\~\$\*])?=?('|")(\w+)('|"))?\]/,
             action : (match:RegExpMatchArray, tokens : string [], elements : HTMLElementData []) => {
-                if(tokens[tokens.length - 1] == '+'){
-                    console.log('this is a difficult problem charlie!');
-                }
-                else if(tokens[tokens.length - 1] == '>'){
-                    console.log('na here we dey ooo');
-                }
                 tokens.push(match[0]);
+                this.done = false;
                 return this.getByAttribute(match[1])
             }
         }
@@ -399,6 +406,9 @@ class HTMLElementData{
         }
         this.outerHTML = outerHTML;
         this.innerHTML = this.innerText = this.textContent = this.outerHTML.slice(this.outerHTML.indexOf('>')+1,this.outerHTML.lastIndexOf('<'));
+    }
+    public getStatus() : Boolean {
+        return this.done;
     }
     private getAllTags(data : string) : tag [] {
         let tagsRegex : RegExp = /<\s*(\w+)\s*.*?>/mi;
@@ -466,6 +476,7 @@ class HTMLElementData{
                 }
             }
         }
+        this.done = true;
         return this.parsedData;
     }
 
@@ -489,8 +500,8 @@ class HTMLElementData{
     }
 
     private getByAttribute( attribute : string, attributeValue ? : string): HTMLElementData[] {
-        let attributeRegExp : RegExp= new RegExp(`${attribute}=\\s*('|")(\\s*${attributeValue}\\s+.*?)|(.*?\\s+${attributeValue}\\s+.*?)|(.*?\\s+${attributeValue}\\s*)("|')`, 'mi');
-        if(this.parsedData.length == 0){
+        let attributeRegExp : RegExp= new RegExp(`${attribute}=\\s*('|")((\\b${attributeValue}\\b.*?)|(.*?\\b${attributeValue}\\b.*?)|(.*?\\b${attributeValue}\\b))("|')`, 'mi');
+        if(this.parsedData.length == 0 || this.done){
             this.parseAllTags();
         }  
         let matchingTags : HTMLElementData [] = <HTMLElementData []> [];
@@ -508,10 +519,12 @@ class HTMLElementData{
     }
 
     public getElementsByClassName(classValue:string) : HTMLElementData []{
+        this.done = true;
         return this.getByAttribute( 'class', classValue);
     }
 
     public querySelectorAll(query : string) : HTMLElementData[] {
+        this.parsedData = this.done ? [] : this.parsedData;
         let tokens : string [] = [];
         query = query.trim();
         while(query.length){
@@ -529,18 +542,21 @@ class HTMLElementData{
                 }
             }
         }
-        
+        this.done = true;
         return this.parsedData;
     }
 
     public querySelector(query : string) : (HTMLElementData | null) {
-        return this.querySelectorAll(query).slice(0,1)[0] ? this.querySelectorAll(query).slice(0,1)[0] : null ;
+        let returnValue = this.querySelectorAll(query).slice(0,1)[0] ? this.querySelectorAll(query).slice(0,1)[0] : null ;
+        this.done = true;
+        return returnValue;
     }
 
     public getAttribute(attribute : string) : (string | null) {
         let attributeRegExp : RegExp= new RegExp(`${attribute}\\s*=\\s*('|")(.*?)("|')`, 'mi');
         let outerHTML = this.outerHTML.slice(this.outerHTML.indexOf('<'),this.outerHTML.indexOf('>')+1);
         let match = outerHTML.match(attributeRegExp);
+        this.done = true;
         return match ? match[2] : null;
     }
 }

@@ -3,9 +3,11 @@ declare class HTMLElementData {
     innerHTML: string;
     innerText: string;
     textContent: string;
+    private done;
     parsedData: HTMLElementData[];
     private patterns;
     constructor(outerHTML: string);
+    getStatus(): Boolean;
     private getAllTags;
     private createTagRegExp;
     getElementsByTagName(tag: string): HTMLElementData[];

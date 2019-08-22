@@ -7,13 +7,6 @@ class BeautifulDom {
         {
             regExp : /\*/,
             action : (match : RegExpMatchArray, tokens : string []) => {
-                
-                if(tokens[tokens.length - 1] == '+'){
-                    console.log('this is a difficult problem charlie!');
-                }
-                else if(tokens[tokens.length - 1] == '>'){
-                    console.log('na here we dey ooo');
-                }
                 tokens.push(match[0]);
                 let holder : HTMLElementData [] = [];
                 if(this.parsedData.length){
@@ -31,7 +24,9 @@ class BeautifulDom {
                      this.parsedData = returnValue;
                      return this.parsedData;
                 }
-                return this.parseAllTags();
+                let returnValue = this.parseAllTags();
+                this.done = false;
+                return returnValue;
             }
         },
         {
@@ -39,7 +34,7 @@ class BeautifulDom {
             action : (match:RegExpMatchArray, tokens : string []) => {
                 
                 if(tokens[tokens.length - 1] == '+'){
-                    console.log('this is not a difficult problem charlie! oooo i hear you');
+                       
                     let htmlElements : HTMLElementData [] = this.parsedData;
                     let allElements : HTMLElementData [] = this.parseAllTags();
                     this.parsedData = htmlElements;
@@ -84,7 +79,7 @@ class BeautifulDom {
                     this.parsedData = returnValue;
                 }
                 else if(tokens[tokens.length - 1] == '>'){
-                    console.log('check me out')
+                       
                     let matchingTags : HTMLElementData [] = [];
                     let scrapData : string [] = [];
                     for(let element = 0; element < this.parsedData.length; element++){
@@ -99,7 +94,7 @@ class BeautifulDom {
                                 }
                             }
                             if(i == this.parsedData.length){
-                                console.log(match[1]);
+                                   
                                 // that means it is not in any of the other matchingTags
                                 if(scrapData.length > 0){
                                     let u = 0;
@@ -110,7 +105,7 @@ class BeautifulDom {
                                         else if(u == scrapData.length -1 && scrapData[u].indexOf(matchingElement.outerHTML) == - 1 ){
                                             scrapData.push(matchingElement.outerHTML);
                                             matchingTags.push(matchingElement);
-                                            console.log(matchingTags.length,'this is the length of matching tags');
+                                               
                                         }
                                     }
                                 } else{
@@ -155,6 +150,7 @@ class BeautifulDom {
                     }
                 });
                 this.parsedData = returnValue;
+                this.done = false;
                 return this.parsedData;
             }
         },
@@ -163,7 +159,7 @@ class BeautifulDom {
             action : (match:RegExpMatchArray, tokens : string []) => {
                 if(tokens[tokens.length - 1] == '+'){
                     tokens.push(match[0])
-                    console.log('this is not a difficult problem charlie! oooo i hear you');
+                       
                     let htmlElements : HTMLElementData [] = this.parsedData;
                     let allElements : HTMLElementData [] = this.parseAllTags();
                     this.parsedData = htmlElements;
@@ -205,10 +201,11 @@ class BeautifulDom {
                         }
                     }
                     this.parsedData = returnValue;
+                    this.done = false;
                     return this.parsedData;
                 }
                 else if(tokens[tokens.length - 1] == '>'){
-                    console.log('check me out')
+                       
                     let matchingTags : HTMLElementData [] = [];
                     let scrapData : string [] = [];
                     for(let element = 0; element < this.parsedData.length; element++){
@@ -223,7 +220,7 @@ class BeautifulDom {
                                 }
                             }
                             if(i == this.parsedData.length){
-                                console.log(match[1]);
+                                   
                                 // that means it is not in any of the other matchingTags
                                 if(scrapData.length > 0){
                                     let u = 0;
@@ -234,7 +231,7 @@ class BeautifulDom {
                                         else if(u == scrapData.length -1 && scrapData[u].indexOf(matchingElement.outerHTML) == - 1 ){
                                             scrapData.push(matchingElement.outerHTML);
                                             matchingTags.push(matchingElement);
-                                            console.log(matchingTags.length,'this is the length of matching tags');
+                                               
                                         }
                                     }
                                 } else{
@@ -245,13 +242,12 @@ class BeautifulDom {
                         }
                     }
                     this.parsedData = matchingTags;
+                    this.done = false;
                     return this.parsedData
                 }
                 tokens.push(match[0]);
                 let holder : HTMLElementData [] = [];
-                console.log('parsed data length', this.parsedData.length);
                 if(this.parsedData.length > 0){
-                    console.log('we are in the depths')
                     this.parsedData.forEach((htmlElement) =>{
                        holder =  holder.concat(htmlElement.getElementsByTagName(match[0]));
                     });
@@ -264,9 +260,12 @@ class BeautifulDom {
                         }
                     })
                     this.parsedData = returnValue;
+                    this.done = false;
                     return this.parsedData;
                 }else{
-                    return this.getElementsByTagName(match[0]);
+                    let returnValue = this.getElementsByTagName(match[0]);
+                    this.done = false;
+                    return returnValue;
                 }
             }
         },
@@ -275,7 +274,6 @@ class BeautifulDom {
             action : (match:RegExpMatchArray, tokens : string [], elements : HTMLElementData []) => {
                 if(tokens[tokens.length - 1] == '+'){
                     tokens.push(match[0])
-                    console.log('this is not a difficult problem charlie! oooo i hear you');
                     let htmlElements : HTMLElementData [] = this.parsedData;
                     let allElements : HTMLElementData [] = this.parseAllTags();
                     this.parsedData = htmlElements;
@@ -318,10 +316,10 @@ class BeautifulDom {
                         }
                     }
                     this.parsedData = returnValue;
+                    this.done = false;
                     return this.parsedData;
                 }
                 else if(tokens[tokens.length - 1] == '>'){
-                    console.log('check me out')
                     let matchingTags : HTMLElementData [] = [];
                     let scrapData : string [] = [];
                     for(let element = 0; element < this.parsedData.length; element++){
@@ -336,7 +334,7 @@ class BeautifulDom {
                                 }
                             }
                             if(i == this.parsedData.length){
-                                console.log(match[1]);
+                                   
                                 // that means it is not in any of the other matchingTags
                                 if(scrapData.length > 0){
                                     let u = 0;
@@ -347,7 +345,6 @@ class BeautifulDom {
                                         else if(u == scrapData.length -1 && scrapData[u].indexOf(matchingElement.outerHTML) == - 1 ){
                                             scrapData.push(matchingElement.outerHTML);
                                             matchingTags.push(matchingElement);
-                                            console.log(matchingTags.length,'this is the length of matching tags');
                                         }
                                     }
                                 } else{
@@ -358,6 +355,8 @@ class BeautifulDom {
                         }
                     }
                     this.parsedData = matchingTags;
+                    this.done = false;
+                    return this.parsedData;
                 }
                 let holder : HTMLElementData [] = [];
                 if(this.parsedData.length > 0){
@@ -373,9 +372,13 @@ class BeautifulDom {
                         }
                     })
                     this.parsedData = returnValue;
+                    this.done = false;
                     return this.parsedData;
                 }else{
-                    return this.getElementsByClassName(match[0].slice(1));
+                       
+                    let returnValue =  this.getElementsByClassName(match[0].slice(1));
+                    this.done = false;
+                    return returnValue;
                 }
             }
         },
@@ -385,6 +388,7 @@ class BeautifulDom {
                 tokens.push(match[0]);
                 let returnValue : any [] = [];
                 returnValue.push(this.getElementById(match[0].slice(1)))
+                this.done = false;
                 return returnValue;
             }
         },
@@ -399,13 +403,10 @@ class BeautifulDom {
             regExp : /\[(\w+)(([\^\|\~\$\*])?=?('|")(\w+)('|"))?\]/,
             action : (match:RegExpMatchArray, tokens : string [], elements : HTMLElementData []) => {
                 tokens.push(match[0]);
-                if(tokens[tokens.length - 1] == '+'){
-                    console.log('this is a difficult problem charlie!');
-                }
-                else if(tokens[tokens.length - 1] == '>'){
-                    console.log('na here we dey ooo');
-                }
-                return this.getByAttribute(match[1])
+                
+                let returnValue = this.getByAttribute(match[1]);
+                this.done = false;
+                return returnValue;
             }
         },
         
@@ -413,6 +414,7 @@ class BeautifulDom {
     
     private data: string;
     private parsedData : HTMLElementData [] = <HTMLElementData []> [];
+    private done : Boolean = false;
 	constructor(data_source : string){
         if(data_source.length == 0){
             throw new Error("Please input the html document you want to parse");
@@ -495,6 +497,7 @@ class BeautifulDom {
                 }
             }
         }
+        this.done = true;
         return this.parsedData;
     }
 
@@ -518,9 +521,9 @@ class BeautifulDom {
     }
 
     private getByAttribute(attribute : string, attributeValue?:string): HTMLElementData[] {
-        let attributeRegExp : RegExp= new RegExp(`${attribute}=\\s*('|")(\\s*${attributeValue}\\s+.*?)|(.*?\\s+${attributeValue}\\s+.*?)|(.*?\\s+${attributeValue}\\s*)("|')`, 'mi');
+        let attributeRegExp : RegExp= new RegExp(`${attribute}=\\s*('|")((\\b${attributeValue}\\b.*?)|(.*?\\b${attributeValue}\\b.*?)|(.*?\\b${attributeValue}\\b))("|')`, 'mi');
         let matchingTags : HTMLElementData[] = <HTMLElementData []> [];
-        if(this.parsedData.length == 0){
+        if(this.parsedData.length == 0 || this.done){
             this.parseAllTags();
         }
         for(let i = 0; i < this.parsedData.length; i++){
@@ -528,6 +531,7 @@ class BeautifulDom {
                 .slice(this.parsedData[i]['outerHTML']
                 .indexOf('<'),this.parsedData[i]['outerHTML']
                 .indexOf('>') + 1 );
+    
             if(openingTag.match(attributeRegExp)){
                 matchingTags.push(this.parsedData[i]);
             }
@@ -537,23 +541,24 @@ class BeautifulDom {
     }
 
     public getElementsByClassName(classValue:string) : HTMLElementData[]{
+        this.done = true;
         return this.getByAttribute('class', classValue.trim());
     }
 
     public getElementById(id : string) : HTMLElementData | null {
         let matchingElements : HTMLElementData [] = this.getByAttribute( "id", id.trim());
         let element : HTMLElementData | null = matchingElements.length > 0 ? matchingElements[0] : null;
+        this.done = true;
         return element;
     }
 
     public getElementsByName(name : string) : HTMLElementData[] {
+        this.done = true;
         return this.getByAttribute( "name", name.trim());
     }
 
     public querySelectorAll(query : string) : HTMLElementData[] {
-        if(this.parsedData.length == 0){
-            this.parseAllTags();   
-        }
+        this.parsedData = this.done ? [] : this.parsedData;
         let tokens : string [] = [];
         query = query.trim();
         while(query.length){
@@ -571,11 +576,14 @@ class BeautifulDom {
                 }
             }
        }
+       this.done = true;
        return this.parsedData;
     }
 
     public querySelector(query : string) : (HTMLElementData | null) {
-        return this.querySelectorAll(query).slice(0,1)[0] ?this.querySelectorAll(query).slice(0,1)[0] : null;
+        let returnValue =  this.querySelectorAll(query).slice(0,1)[0] ?this.querySelectorAll(query).slice(0,1)[0] : null;
+        this.done = true;
+        return returnValue;
     }
 }
 

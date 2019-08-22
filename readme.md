@@ -42,7 +42,6 @@ Methods on the document object.
 - document.getElementById()
 - document.querySelectorAll()
 - document.querySelector()
-- document.reInit() : clears the memory of DOM object after consecutive operations and returns a reference to the object.
 
 Methods on the HTML node object
 - node.getElementsByClassName()
@@ -66,19 +65,19 @@ Their usage is as they are expected to be used in an actual HTML DOM with the de
 let paragraphNodes = dom.getElementsByTagName('p');
 // returns a list of node objects with node name 'p'
 
-let nodesWithSpecificClass = dom.reInit().getElementsByClassName('work');
+let nodesWithSpecificClass = dom.getElementsByClassName('work');
 // returns a list of node objects with class name 'work'
 
-let nodeWithSpecificId = dom.reInit().getElementById('container');
+let nodeWithSpecificId = dom.getElementById('container');
 // returns a node with id 'container'
 
-let complexQueryNodes = dom.reInit().querySelectorAll('p.paragraph b');
+let complexQueryNodes = dom.querySelectorAll('p.paragraph b');
 // returns a list of nodes that satisfy the complex query of CSS selectors
 
-let nodesWithSpecificName = dom.reInit().getElementsByName('name');
+let nodesWithSpecificName = dom.getElementsByName('name');
 // returns a list of nodes with the specific 'name'
 
-let linkNode = dom.reInit().querySelector('a#myWebsite');
+let linkNode = dom.querySelector('a#myWebsite');
 // returns a node object with with the CSS selector
 
 let linkHref = linkNode.getAttribute('href');
@@ -114,7 +113,7 @@ let complexQueryNodes = paragraphNodes[0].querySelectorAll('span.work');
 // returns a list of nodes in the paragraph node that satisfy the complex query of CSS selectors
 
 
-let linkNode = dom.reInit().querySelector('a#myWebsite');
+let linkNode = dom.querySelector('a#myWebsite');
 // returns a node object with with the CSS selector
 
 let linkHref = linkNode.getAttribute('href');
@@ -144,6 +143,3 @@ In case you have any ideas, features you would like to be included or any bug fi
 ```bash
 git clone https://github.com/ChukwuEmekaAjah/beautiful-dom.git
 ```
-
-## Call for advice
-I need help with a procedure on how to remove the 'reInit' method used for clearing the memory of DOM object after each method call so as to model actual HTML DOM behaviour. 

@@ -11,41 +11,36 @@ var BeautifulDom = /** @class */ (function () {
             {
                 regExp: /\*/,
                 action: function (match, tokens) {
-                    if (tokens[tokens.length - 1] == '+') {
-                        console.log('this is a difficult problem charlie!');
-                    }
-                    else if (tokens[tokens.length - 1] == '>') {
-                        console.log('na here we dey ooo');
-                    }
                     tokens.push(match[0]);
                     var holder = [];
                     if (_this.parsedData.length) {
                         _this.parsedData.forEach(function (htmlElement) {
                             holder = holder.concat(htmlElement.parseAllTags());
                         });
-                        var returnValue = [];
+                        var returnValue_1 = [];
                         var scrapData_1 = [];
-                        returnValue = holder.filter(function (element) {
+                        returnValue_1 = holder.filter(function (element) {
                             if (scrapData_1.indexOf(element.outerHTML) == -1) {
                                 scrapData_1.push(element.outerHTML);
                                 return true;
                             }
                         });
-                        _this.parsedData = returnValue;
+                        _this.parsedData = returnValue_1;
                         return _this.parsedData;
                     }
-                    return _this.parseAllTags();
+                    var returnValue = _this.parseAllTags();
+                    _this.done = false;
+                    return returnValue;
                 }
             },
             {
                 regExp: /(\w+)(\.|#)(\w+)/,
                 action: function (match, tokens) {
                     if (tokens[tokens.length - 1] == '+') {
-                        console.log('this is not a difficult problem charlie! oooo i hear you');
                         var htmlElements = _this.parsedData;
                         var allElements = _this.parseAllTags();
                         _this.parsedData = htmlElements;
-                        var returnValue_1 = [];
+                        var returnValue_2 = [];
                         var secondSiblingRegExp = _this.createTagRegExp(match[1]);
                         var secondSiblingMatch = void 0;
                         var scrapData = [];
@@ -69,7 +64,7 @@ var BeautifulDom = /** @class */ (function () {
                                             indexOf('>') + 1).match(secondSiblingRegExp.openingRegExp)) {
                                             if (scrapData.indexOf(allElements[x]['outerHTML']) == -1) {
                                                 scrapData.push(allElements[x].outerHTML);
-                                                returnValue_1.push(allElements[x]);
+                                                returnValue_2.push(allElements[x]);
                                                 breakingCondition = true;
                                                 u = x;
                                                 break;
@@ -82,10 +77,9 @@ var BeautifulDom = /** @class */ (function () {
                                 }
                             }
                         }
-                        _this.parsedData = returnValue_1;
+                        _this.parsedData = returnValue_2;
                     }
                     else if (tokens[tokens.length - 1] == '>') {
-                        console.log('check me out');
                         var matchingTags = [];
                         var scrapData = [];
                         for (var element = 0; element < _this.parsedData.length; element++) {
@@ -100,7 +94,6 @@ var BeautifulDom = /** @class */ (function () {
                                     }
                                 }
                                 if (i == _this.parsedData.length) {
-                                    console.log(match[1]);
                                     // that means it is not in any of the other matchingTags
                                     if (scrapData.length > 0) {
                                         var u = 0;
@@ -111,7 +104,6 @@ var BeautifulDom = /** @class */ (function () {
                                             else if (u == scrapData.length - 1 && scrapData[u].indexOf(matchingElement.outerHTML) == -1) {
                                                 scrapData.push(matchingElement.outerHTML);
                                                 matchingTags.push(matchingElement);
-                                                console.log(matchingTags.length, 'this is the length of matching tags');
                                             }
                                         }
                                     }
@@ -130,15 +122,15 @@ var BeautifulDom = /** @class */ (function () {
                             _this.parsedData.forEach(function (htmlElement) {
                                 holder_1 = holder_1.concat(htmlElement.getElementsByTagName(match[1]));
                             });
-                            var returnValue_2 = [];
+                            var returnValue_3 = [];
                             var scrapData_2 = [];
-                            returnValue_2 = holder_1.filter(function (element) {
+                            returnValue_3 = holder_1.filter(function (element) {
                                 if (scrapData_2.indexOf(element.outerHTML) == -1) {
                                     scrapData_2.push(element.outerHTML);
                                     return true;
                                 }
                             });
-                            _this.parsedData = returnValue_2;
+                            _this.parsedData = returnValue_3;
                         }
                         else {
                             _this.getElementsByTagName(match[1]);
@@ -158,6 +150,7 @@ var BeautifulDom = /** @class */ (function () {
                         }
                     });
                     _this.parsedData = returnValue;
+                    _this.done = false;
                     return _this.parsedData;
                 }
             },
@@ -166,7 +159,6 @@ var BeautifulDom = /** @class */ (function () {
                 action: function (match, tokens) {
                     if (tokens[tokens.length - 1] == '+') {
                         tokens.push(match[0]);
-                        console.log('this is not a difficult problem charlie! oooo i hear you');
                         var htmlElements = _this.parsedData;
                         var allElements = _this.parseAllTags();
                         _this.parsedData = htmlElements;
@@ -207,10 +199,10 @@ var BeautifulDom = /** @class */ (function () {
                             }
                         }
                         _this.parsedData = returnValue;
+                        _this.done = false;
                         return _this.parsedData;
                     }
                     else if (tokens[tokens.length - 1] == '>') {
-                        console.log('check me out');
                         var matchingTags = [];
                         var scrapData = [];
                         for (var element = 0; element < _this.parsedData.length; element++) {
@@ -225,7 +217,6 @@ var BeautifulDom = /** @class */ (function () {
                                     }
                                 }
                                 if (i == _this.parsedData.length) {
-                                    console.log(match[1]);
                                     // that means it is not in any of the other matchingTags
                                     if (scrapData.length > 0) {
                                         var u = 0;
@@ -236,7 +227,6 @@ var BeautifulDom = /** @class */ (function () {
                                             else if (u == scrapData.length - 1 && scrapData[u].indexOf(matchingElement.outerHTML) == -1) {
                                                 scrapData.push(matchingElement.outerHTML);
                                                 matchingTags.push(matchingElement);
-                                                console.log(matchingTags.length, 'this is the length of matching tags');
                                             }
                                         }
                                     }
@@ -248,13 +238,12 @@ var BeautifulDom = /** @class */ (function () {
                             }
                         }
                         _this.parsedData = matchingTags;
+                        _this.done = false;
                         return _this.parsedData;
                     }
                     tokens.push(match[0]);
                     var holder = [];
-                    console.log('parsed data length', _this.parsedData.length);
                     if (_this.parsedData.length > 0) {
-                        console.log('we are in the depths');
                         _this.parsedData.forEach(function (htmlElement) {
                             holder = holder.concat(htmlElement.getElementsByTagName(match[0]));
                         });
@@ -267,10 +256,13 @@ var BeautifulDom = /** @class */ (function () {
                             }
                         });
                         _this.parsedData = returnValue;
+                        _this.done = false;
                         return _this.parsedData;
                     }
                     else {
-                        return _this.getElementsByTagName(match[0]);
+                        var returnValue = _this.getElementsByTagName(match[0]);
+                        _this.done = false;
+                        return returnValue;
                     }
                 }
             },
@@ -279,7 +271,6 @@ var BeautifulDom = /** @class */ (function () {
                 action: function (match, tokens, elements) {
                     if (tokens[tokens.length - 1] == '+') {
                         tokens.push(match[0]);
-                        console.log('this is not a difficult problem charlie! oooo i hear you');
                         var htmlElements = _this.parsedData;
                         var allElements = _this.parseAllTags();
                         _this.parsedData = htmlElements;
@@ -321,10 +312,10 @@ var BeautifulDom = /** @class */ (function () {
                             }
                         }
                         _this.parsedData = returnValue;
+                        _this.done = false;
                         return _this.parsedData;
                     }
                     else if (tokens[tokens.length - 1] == '>') {
-                        console.log('check me out');
                         var matchingTags = [];
                         var scrapData = [];
                         for (var element = 0; element < _this.parsedData.length; element++) {
@@ -339,7 +330,6 @@ var BeautifulDom = /** @class */ (function () {
                                     }
                                 }
                                 if (i == _this.parsedData.length) {
-                                    console.log(match[1]);
                                     // that means it is not in any of the other matchingTags
                                     if (scrapData.length > 0) {
                                         var u = 0;
@@ -350,7 +340,6 @@ var BeautifulDom = /** @class */ (function () {
                                             else if (u == scrapData.length - 1 && scrapData[u].indexOf(matchingElement.outerHTML) == -1) {
                                                 scrapData.push(matchingElement.outerHTML);
                                                 matchingTags.push(matchingElement);
-                                                console.log(matchingTags.length, 'this is the length of matching tags');
                                             }
                                         }
                                     }
@@ -362,6 +351,8 @@ var BeautifulDom = /** @class */ (function () {
                             }
                         }
                         _this.parsedData = matchingTags;
+                        _this.done = false;
+                        return _this.parsedData;
                     }
                     var holder = [];
                     if (_this.parsedData.length > 0) {
@@ -377,10 +368,13 @@ var BeautifulDom = /** @class */ (function () {
                             }
                         });
                         _this.parsedData = returnValue;
+                        _this.done = false;
                         return _this.parsedData;
                     }
                     else {
-                        return _this.getElementsByClassName(match[0].slice(1));
+                        var returnValue = _this.getElementsByClassName(match[0].slice(1));
+                        _this.done = false;
+                        return returnValue;
                     }
                 }
             },
@@ -390,6 +384,7 @@ var BeautifulDom = /** @class */ (function () {
                     tokens.push(match[0]);
                     var returnValue = [];
                     returnValue.push(_this.getElementById(match[0].slice(1)));
+                    _this.done = false;
                     return returnValue;
                 }
             },
@@ -404,17 +399,14 @@ var BeautifulDom = /** @class */ (function () {
                 regExp: /\[(\w+)(([\^\|\~\$\*])?=?('|")(\w+)('|"))?\]/,
                 action: function (match, tokens, elements) {
                     tokens.push(match[0]);
-                    if (tokens[tokens.length - 1] == '+') {
-                        console.log('this is a difficult problem charlie!');
-                    }
-                    else if (tokens[tokens.length - 1] == '>') {
-                        console.log('na here we dey ooo');
-                    }
-                    return _this.getByAttribute(match[1]);
+                    var returnValue = _this.getByAttribute(match[1]);
+                    _this.done = false;
+                    return returnValue;
                 }
             },
         ];
         this.parsedData = [];
+        this.done = false;
         if (data_source.length == 0) {
             throw new Error("Please input the html document you want to parse");
         }
@@ -489,6 +481,7 @@ var BeautifulDom = /** @class */ (function () {
                 }
             }
         }
+        this.done = true;
         return this.parsedData;
     };
     BeautifulDom.prototype.parseAllTags = function () {
@@ -515,9 +508,9 @@ var BeautifulDom = /** @class */ (function () {
         return this.parsedData;
     };
     BeautifulDom.prototype.getByAttribute = function (attribute, attributeValue) {
-        var attributeRegExp = new RegExp(attribute + "=\\s*('|\")(\\s*" + attributeValue + "\\s+.*?)|(.*?\\s+" + attributeValue + "\\s+.*?)|(.*?\\s+" + attributeValue + "\\s*)(\"|')", 'mi');
+        var attributeRegExp = new RegExp(attribute + "=\\s*('|\")((\\b" + attributeValue + "\\b.*?)|(.*?\\b" + attributeValue + "\\b.*?)|(.*?\\b" + attributeValue + "\\b))(\"|')", 'mi');
         var matchingTags = [];
-        if (this.parsedData.length == 0) {
+        if (this.parsedData.length == 0 || this.done) {
             this.parseAllTags();
         }
         for (var i = 0; i < this.parsedData.length; i++) {
@@ -533,20 +526,21 @@ var BeautifulDom = /** @class */ (function () {
         return matchingTags;
     };
     BeautifulDom.prototype.getElementsByClassName = function (classValue) {
+        this.done = true;
         return this.getByAttribute('class', classValue.trim());
     };
     BeautifulDom.prototype.getElementById = function (id) {
         var matchingElements = this.getByAttribute("id", id.trim());
         var element = matchingElements.length > 0 ? matchingElements[0] : null;
+        this.done = true;
         return element;
     };
     BeautifulDom.prototype.getElementsByName = function (name) {
+        this.done = true;
         return this.getByAttribute("name", name.trim());
     };
     BeautifulDom.prototype.querySelectorAll = function (query) {
-        if (this.parsedData.length == 0) {
-            this.parseAllTags();
-        }
+        this.parsedData = this.done ? [] : this.parsedData;
         var tokens = [];
         query = query.trim();
         while (query.length) {
@@ -565,10 +559,13 @@ var BeautifulDom = /** @class */ (function () {
                 }
             }
         }
+        this.done = true;
         return this.parsedData;
     };
     BeautifulDom.prototype.querySelector = function (query) {
-        return this.querySelectorAll(query).slice(0, 1)[0] ? this.querySelectorAll(query).slice(0, 1)[0] : null;
+        var returnValue = this.querySelectorAll(query).slice(0, 1)[0] ? this.querySelectorAll(query).slice(0, 1)[0] : null;
+        this.done = true;
+        return returnValue;
     };
     return BeautifulDom;
 }());

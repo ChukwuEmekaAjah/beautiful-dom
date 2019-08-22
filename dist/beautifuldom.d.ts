@@ -3,6 +3,7 @@ declare class BeautifulDom {
     private patterns;
     private data;
     private parsedData;
+    private done;
     constructor(data_source: string);
     reInit(): this;
     private getAllTags;
