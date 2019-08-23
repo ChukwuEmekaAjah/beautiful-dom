@@ -7,6 +7,9 @@
   "scripts": {
     "test": "jest"
   },
+  "devDependencies":{
+    "jest": "^24.5.0"
+  },
   "keywords": ["dom","html","xml","parser","crawler"],
   "author": "Ajah Chukwuemeka",
   "license": "ISC"

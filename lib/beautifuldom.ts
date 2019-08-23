@@ -422,7 +422,7 @@ class BeautifulDom {
         if(typeof data_source != 'string'){
             throw new TypeError('Input data must be a string');
         }
-        this.data = data_source.split(/\n\r|\n|\r/gmi).join(" ");
+        this.data = data_source.toString().split(/\n\r|\n|\r/gmi).join(" ");
     } 
 
     public reInit(){
@@ -446,8 +446,8 @@ class BeautifulDom {
     }
 
     private createTagRegExp(tagType : string) : RegExpObject{
-        let tagRegExp : RegExp = new RegExp(`<\\s*${tagType}(\\s*|\\s+).*?>|<\\s*\/${tagType}>`,"mi");
-        let openingRegExp : RegExp = new RegExp(`<\\s*${tagType}(\\s*|\\s+).*?>`);
+        let tagRegExp : RegExp = new RegExp(`<\\s*${tagType}\\b.*?>|<\\s*\/${tagType}>`,"mi");
+        let openingRegExp : RegExp = new RegExp(`<\\s*${tagType}\\b.*?>`);
         let closingRegExp : RegExp = new RegExp(`<\\s*\/${tagType}>`);
 
 	    return {tagRegExp: tagRegExp, openingRegExp:openingRegExp, closingRegExp: closingRegExp};

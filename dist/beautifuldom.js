@@ -413,7 +413,7 @@ var BeautifulDom = /** @class */ (function () {
         if (typeof data_source != 'string') {
             throw new TypeError('Input data must be a string');
         }
-        this.data = data_source.split(/\n\r|\n|\r/gmi).join(" ");
+        this.data = data_source.toString().split(/\n\r|\n|\r/gmi).join(" ");
     }
     BeautifulDom.prototype.reInit = function () {
         this.parsedData = [];
@@ -434,8 +434,8 @@ var BeautifulDom = /** @class */ (function () {
         return availableTags;
     };
     BeautifulDom.prototype.createTagRegExp = function (tagType) {
-        var tagRegExp = new RegExp("<\\s*" + tagType + "(\\s*|\\s+).*?>|<\\s*/" + tagType + ">", "mi");
-        var openingRegExp = new RegExp("<\\s*" + tagType + "(\\s*|\\s+).*?>");
+        var tagRegExp = new RegExp("<\\s*" + tagType + "\\b.*?>|<\\s*/" + tagType + ">", "mi");
+        var openingRegExp = new RegExp("<\\s*" + tagType + "\\b.*?>");
         var closingRegExp = new RegExp("<\\s*/" + tagType + ">");
         return { tagRegExp: tagRegExp, openingRegExp: openingRegExp, closingRegExp: closingRegExp };
     };
