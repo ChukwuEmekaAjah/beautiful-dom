@@ -442,6 +442,8 @@ class BeautifulDom {
             let index = match ? typeof(match['index']) == 'number' ? match['index'] : 0 : 0;
             startingIndex += index + match[0].length;
         }
+
+        console.log("all available tags are ", availableTags);
         return availableTags;
     }
 
