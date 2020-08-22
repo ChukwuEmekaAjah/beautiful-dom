@@ -3,6 +3,9 @@ const fs = require('fs');
 
 const htmlFile = fs.readFileSync('data/test.html').toString();
 
+console.log(beautifulDom, "type is", typeof(beautifulDom))
+console.log(beautifulDom)
+
 const dom = new beautifulDom(htmlFile);
 
 describe('HTML DOM object and its methods', function(){
