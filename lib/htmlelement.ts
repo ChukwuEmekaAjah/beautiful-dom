@@ -406,7 +406,7 @@ class HTMLElementData{
         }
         this.outerHTML = outerHTML;
         this.innerHTML = this.innerText = this.textContent = this.outerHTML.slice(this.outerHTML.indexOf('>')+1,this.outerHTML.lastIndexOf('<'));
-        this.textContent = this.textContent.replace(/<.*?>/gi, '');
+        this.textContent = this.innerText = this.textContent.replace(/<.*?>/gi, '');
     }
     public getStatus() : Boolean {
         return this.done;
