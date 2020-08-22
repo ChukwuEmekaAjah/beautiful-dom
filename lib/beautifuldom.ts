@@ -442,6 +442,8 @@ class BeautifulDom {
             let index = match ? typeof(match['index']) == 'number' ? match['index'] : 0 : 0;
             startingIndex += index + match[0].length;
         }
+
+        console.log("all available tags are ", availableTags);
         return availableTags;
     }
 
@@ -458,15 +460,16 @@ class BeautifulDom {
         let data_copy : string;
         this.parsedData = <HTMLElementData []> [];
         data_copy = this.data.slice(0,);
-        let match : RegExpMatchArray | null;
+        let match : RegExpExecArray | null;
         let matchRegex : RegExpObject = this.createTagRegExp(tag.trim());
-        let matches : RegExpMatchArray[] =  [];
-        while(match = data_copy.match(matchRegex.tagRegExp)){
+        let matches : RegExpExecArray [] =  < RegExpExecArray []> [];
+        while(match = (matchRegex.tagRegExp).exec(data_copy)){
             let index : number = match ? typeof (match['index']) == 'number' ? match['index'] : 0  : 0;
             data_copy = data_copy.slice(match[0].length + index,);
             if(matches.length > 0){
                 match['index'] = matches[matches.length - 1]['index'] + matches[matches.length - 1][0].length + index;
             }
+            
             matches.push(match);
         }
 
