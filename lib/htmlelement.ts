@@ -406,6 +406,7 @@ class HTMLElementData{
         }
         this.outerHTML = outerHTML;
         this.innerHTML = this.innerText = this.textContent = this.outerHTML.slice(this.outerHTML.indexOf('>')+1,this.outerHTML.lastIndexOf('<'));
+        this.textContent = this.textContent.replace(/<.*?>/gi, '');
     }
     public getStatus() : Boolean {
         return this.done;
@@ -436,15 +437,15 @@ class HTMLElementData{
 
     public getElementsByTagName(tag : string){
         this.parsedData = < HTMLElementData []> [];
-        let match : RegExpMatchArray | null;
+        let match : RegExpExecArray | null;
         let matchRegex : RegExpObject = this.createTagRegExp(tag);
         let data_copy : string = this.innerHTML.slice(0,);
-        let matches : RegExpMatchArray[] = < RegExpMatchArray []> [];
-        while(match = data_copy.match(matchRegex.tagRegExp)){
+        let matches : RegExpExecArray [] = < RegExpExecArray []> [];
+        while(match = (matchRegex.tagRegExp).exec(data_copy)){
             let index = match ? typeof(match['index']) == 'number' ? match['index'] : 0 : 0;
             data_copy = data_copy.slice(match[0].length + index,);
             if(matches.length > 0){
-                match['index'] = matches[matches.length-1]['index'] + matches[matches.length - 1][0].length + match['index'];
+                match['index'] = matches[matches.length-1]['index'] + matches[matches.length - 1][0].length + (match['index'] ? match['index'] : 0);
             }
             matches.push(match);
         }

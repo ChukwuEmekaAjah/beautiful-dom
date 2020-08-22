@@ -398,6 +398,7 @@ var HTMLElementData = /** @class */ (function () {
         }
         this.outerHTML = outerHTML;
         this.innerHTML = this.innerText = this.textContent = this.outerHTML.slice(this.outerHTML.indexOf('>') + 1, this.outerHTML.lastIndexOf('<'));
+        this.textContent = this.textContent.replace(/<.*?>/gi, '');
     }
     HTMLElementData.prototype.getStatus = function () {
         return this.done;
@@ -428,11 +429,11 @@ var HTMLElementData = /** @class */ (function () {
         var matchRegex = this.createTagRegExp(tag);
         var data_copy = this.innerHTML.slice(0);
         var matches = [];
-        while (match = data_copy.match(matchRegex.tagRegExp)) {
+        while (match = (matchRegex.tagRegExp).exec(data_copy)) {
             var index = match ? typeof (match['index']) == 'number' ? match['index'] : 0 : 0;
             data_copy = data_copy.slice(match[0].length + index);
             if (matches.length > 0) {
-                match['index'] = matches[matches.length - 1]['index'] + matches[matches.length - 1][0].length + match['index'];
+                match['index'] = matches[matches.length - 1]['index'] + matches[matches.length - 1][0].length + (match['index'] ? match['index'] : 0);
             }
             matches.push(match);
         }

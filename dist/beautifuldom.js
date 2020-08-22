@@ -431,6 +431,7 @@ var BeautifulDom = /** @class */ (function () {
             var index = match ? typeof (match['index']) == 'number' ? match['index'] : 0 : 0;
             startingIndex += index + match[0].length;
         }
+        console.log("all available tags are ", availableTags);
         return availableTags;
     };
     BeautifulDom.prototype.createTagRegExp = function (tagType) {
@@ -446,7 +447,7 @@ var BeautifulDom = /** @class */ (function () {
         var match;
         var matchRegex = this.createTagRegExp(tag.trim());
         var matches = [];
-        while (match = data_copy.match(matchRegex.tagRegExp)) {
+        while (match = (matchRegex.tagRegExp).exec(data_copy)) {
             var index = match ? typeof (match['index']) == 'number' ? match['index'] : 0 : 0;
             data_copy = data_copy.slice(match[0].length + index);
             if (matches.length > 0) {
