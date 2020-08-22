@@ -398,7 +398,7 @@ var HTMLElementData = /** @class */ (function () {
         }
         this.outerHTML = outerHTML;
         this.innerHTML = this.innerText = this.textContent = this.outerHTML.slice(this.outerHTML.indexOf('>') + 1, this.outerHTML.lastIndexOf('<'));
-        this.textContent = this.textContent.replace(/<.*?>/gi, '');
+        this.textContent = this.innerText = this.textContent.replace(/<.*?>/gi, '');
     }
     HTMLElementData.prototype.getStatus = function () {
         return this.done;
