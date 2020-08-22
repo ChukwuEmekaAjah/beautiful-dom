@@ -1,6 +1,6 @@
 {
   "name": "beautiful-dom",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Beautiful-dom is a lightweight library that mirrors the capabilities of the HTML DOM API needed for parsing crawled HTML/XML pages. It models the methods and properties of HTML nodes that are relevant for extracting data from HTML nodes. It is written in TypeScript and can be used as a CommonJS library",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
