@@ -443,7 +443,6 @@ class BeautifulDom {
             startingIndex += index + match[0].length;
         }
 
-        console.log("all available tags are ", availableTags);
         return availableTags;
     }
 
