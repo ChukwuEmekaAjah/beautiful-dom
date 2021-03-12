@@ -407,11 +407,11 @@ var BeautifulDom = /** @class */ (function () {
         ];
         this.parsedData = [];
         this.done = false;
-        if (data_source.length == 0) {
-            throw new Error("Please input the html document you want to parse");
-        }
         if (typeof data_source != 'string') {
             throw new TypeError('Input data must be a string');
+        }
+        if (!data_source || Boolean(data_source.trim()) == false) { // empty string
+            throw new Error("Please input the html document you want to parse");
         }
         this.data = data_source.toString().split(/\n\r|\n|\r/gmi).join(" ");
     }
@@ -431,7 +431,6 @@ var BeautifulDom = /** @class */ (function () {
             var index = match ? typeof (match['index']) == 'number' ? match['index'] : 0 : 0;
             startingIndex += index + match[0].length;
         }
-        console.log("all available tags are ", availableTags);
         return availableTags;
     };
     BeautifulDom.prototype.createTagRegExp = function (tagType) {
