@@ -416,12 +416,15 @@ class BeautifulDom {
     private parsedData : HTMLElementData [] = <HTMLElementData []> [];
     private done : Boolean = false;
 	constructor(data_source : string){
-        if(data_source.length == 0){
-            throw new Error("Please input the html document you want to parse");
-        }
+        
         if(typeof data_source != 'string'){
             throw new TypeError('Input data must be a string');
         }
+
+        if(!data_source || Boolean(data_source.trim()) == false){ // empty string
+            throw new Error("Please input the html document you want to parse");
+        }
+
         this.data = data_source.toString().split(/\n\r|\n|\r/gmi).join(" ");
     } 
 
@@ -443,7 +446,6 @@ class BeautifulDom {
             startingIndex += index + match[0].length;
         }
 
-        console.log("all available tags are ", availableTags);
         return availableTags;
     }
 
